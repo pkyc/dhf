@@ -17,10 +17,8 @@ from array import array
 client = MongoClient()
 db = client['xscore'].todos
 
-#rawinput = raw_input()
 rawinput = str(sys.argv[1])
 print(rawinput)
-#rawinput = "SW1,Djurgarden,Jonkopings,SW1,IFK Goteborg,AIK Stockholm"
 league1,home1,away1,league2,home2,away2 = rawinput.split(',')
 
 ################# step 1 calculate index #############################

@@ -2,10 +2,13 @@
 # parse the data from www.xscores.com
 #
 from datetime import datetime, date, time
+import sys
 import csv
 import commands
 
-filename = raw_input()
+filename = str(sys.argv[1])
+year = str(sys.argv[2])
+#filename = raw_input()
 #filename = "AUS1.csv"
 
 def main():
@@ -20,7 +23,7 @@ def toCSV():
 	output = league+".out"
 	with open(output, 'w+') as csvoutfile:
 		writer = csv.writer(csvoutfile, delimiter=',')
-		writer.writerow(['user_id','Date','Team','Role','league','fh','sh','fl','sl','checkid'])
+		writer.writerow(['Date','Team','Role','league','fh','sh','fl','sl','checkid','year'])
 		with open(filename) as csvfile:
 			reader = csv.reader(csvfile,delimiter="\t")
 			for row in reader:
@@ -32,9 +35,8 @@ def toCSV():
 					away = row[7].title()
 					half_h,half_a = row[10].split('-')
 					final_h,final_a = row[11].split('-')
-					user = 'dean'
-					writer.writerow([user,date,home.strip(),"home",league,half_h,int(final_h)-int(half_h),half_a,int(final_a)-int(half_a),i])
-					writer.writerow([user,date,away.strip(),"away",league,half_a,int(final_a)-int(half_a),half_h,int(final_h)-int(half_h),i])
+					writer.writerow([date,home.strip(),"home",league,half_h,int(final_h)-int(half_h),half_a,int(final_a)-int(half_a),i,year])
+					writer.writerow([date,away.strip(),"away",league,half_a,int(final_a)-int(half_a),half_h,int(final_h)-int(half_h),i,year])
 
 	commandline = "mongoimport -d xscore -c todos --type csv --headerline --file "+output
 	print commandline

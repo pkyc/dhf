@@ -12,9 +12,15 @@ from prettytable import PrettyTable
 client = MongoClient()
 db = client['xscore'].todos
 
-def cal_index(league,home,away):
-	pipeline_h = [ {"$match": {"Team": home, "Role": "home", "league": league}}, {"$group": {"_id": home, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
-	pipeline_a = [ {"$match": {"Team": away, "Role": "away", "league": league}}, {"$group": {"_id": away, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
+def cal_index(league,home,away,years):
+	if (years == "all"):
+		pipeline_h = [ {"$match": {"Team": home, "Role": "home", "league": league}}, {"$group": {"_id": home, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
+		pipeline_a = [ {"$match": {"Team": away, "Role": "away", "league": league}}, {"$group": {"_id": away, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
+	else:
+		years = int(years)
+		pipeline_h = [ {"$match": {"Team": home, "Role": "home", "league": league, "year": years}}, {"$group": {"_id": home, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
+		pipeline_a = [ {"$match": {"Team": away, "Role": "away", "league": league, "year": years}}, {"$group": {"_id": away, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
+
 	#home
 	result_h = list(db.aggregate(pipeline_h))
 	tm_h  = result_h[0]['totalMatch']

@@ -69,7 +69,7 @@ for h in sorted_ht_list2:
       sorted_htsh_list2 = sorted(htsh_list2, key=lambda x: x[1], reverse=True)
 
 ### temporary print the ht/sh/ht/sh
-for h in range(783):
+for h in range(20):
 	print h,sorted_htsh_list1[h],sorted_htsh_list2[h]
 
 ##### combine 1st leg and 2nd leg, then sort ######
@@ -78,14 +78,14 @@ sorted_htsh_list1.remove(("",""))
 sorted_htsh_list2.remove(("",""))
 
 full_list = [("","")]
-for each1 in sorted_htsh_list1:
-   for each2 in sorted_htsh_list2:
+for each1 in sorted_htsh_list1[:15]:
+   for each2 in sorted_htsh_list2[:15]:
         full_list.append((each1[0]+each2[0],(each1[1]*each2[1]))) 
 
 sorted_full_list = sorted(full_list, key=lambda x: x[1], reverse=True)
 
 ### temporary disable printout
-for i in range(10000):
+for i in range(len(sorted_full_list)):
    print i, sorted_full_list[i][0], sorted_full_list[i][1]
 
 sorted_full_list.pop(0)

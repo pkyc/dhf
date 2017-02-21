@@ -16,12 +16,7 @@ jin = client['xscore'].jinput
 db = client.xscore
 
 def main():
-	#parse_input()
 	parse_record()
-
-def parse_input():
-	print("parse iput")
-
 
 def parse_record():
 	with open(filename) as csvfile:
@@ -59,8 +54,10 @@ def parse_record():
 			else:
 				print("done")
 		resu = d1.replace(" ","") + d2.replace(" ","") + "-" + ran
-		commandline = "python cal2.py '" + l1 + "," + h1 + "," + a1 + "," + l2 + "," +h2+ "," +a2+ "' > result/" + resu + ".txt"
+		commandline = "python cal2.py '" + l1 + "," + h1 + "," + a1 + "," + l2 + "," +h2+ "," +a2+ "' 1617 > result/" + resu + ".txt"
+		commandlinet10 = "python cal2-t10.py '" + l1 + "," + h1 + "," + a1 + "," + l2 + "," +h2+ "," +a2+ "' 1617 > result/" + resu + "t10.txt"
 		print commandline
+		print commandlinet10
 
 def l_lookup(l,ran):
 	try:

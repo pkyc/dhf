@@ -22,6 +22,7 @@ def cal_index(league,home,away,years):
 		pipeline_a = [ {"$match": {"Team": away, "Role": "away", "league": league, "year": years}}, {"$group": {"_id": away, "totalMatch": {"$sum": 1 },  "fh": {"$sum": "$fh" }, "sh": {"$sum": "$sh" }, "fl": {"$sum": "$fl" }, "sl": {"$sum": "$sl" }} } ]
 
 	#home
+	print(pipeline_h)
 	result_h = list(db.aggregate(pipeline_h))
 	tm_h  = result_h[0]['totalMatch']
 	htg_h = result_h[0]['fh']

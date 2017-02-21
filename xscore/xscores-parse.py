@@ -8,8 +8,6 @@ import commands
 
 filename = str(sys.argv[1])
 year = str(sys.argv[2])
-#filename = raw_input()
-#filename = "AUS1.csv"
 
 def main():
 	#for afile in filelist:
@@ -39,6 +37,7 @@ def toCSV():
 					writer.writerow([date,away.strip(),"away",league,half_a,int(final_a)-int(half_a),half_h,int(final_h)-int(half_h),i,year])
 
 	commandline = "mongoimport -d xscore -c todos --type csv --headerline --file "+output
+	genTeam(output)
 	print commandline
 	#commands.getstatusoutput(commandline)
 
@@ -47,5 +46,12 @@ def reDate(d):
 	fulldate = datetime.strptime(d, '%Y-%m-%d')
 	phasedate = fulldate.strftime('%d-%m-%Y')+"T00:00:00Z"
 	return(phasedate)	
+
+def genTeam(output):
+	genteam = "awk -F',' '{print $2}' " + output + " | sort | uniq > "+ output[0:-4]+".team"
+	commands.getstatusoutput(genteam)
+	print output[0:-4]+".team generated!"
+	return()
+
 	
 main()
